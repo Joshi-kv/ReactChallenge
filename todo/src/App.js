@@ -19,15 +19,25 @@ function App() {
       </div>
       <div className="input">
         <input value={todo} onChange={(event)=>setTodo(event.target.value)} type="text" placeholder="🖊️ Add item..." />
-        <i onClick={()=>setState([...state,todo])} className="fas fa-plus"></i>
+        <i onClick={()=>setState([...state,{id:Date.now(), text:todo,status:false}])} className="fas fa-plus"></i>
       </div>
       <div className="todos">
        { state.map((value)=>{
         return (
           <div className="todo">
           <div className="left">
-            <input type="checkbox" name="" id="" />
-            <p>{value}</p>
+            <input onChange={(e)=>{
+              console.log(e.target.checked);
+              console.log(value);
+              setState(
+              state.filter(obj=>{
+                if(obj.id===value.id){
+                  obj.status=e.target.checked
+                }
+                return obj
+              })
+            )}} value={value.status} type="checkbox" name="" id="" />
+            <p>{value.text}</p>
           </div>
           <div className="right">
             <i className="fas fa-times"></i>
